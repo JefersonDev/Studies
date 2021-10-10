@@ -1,0 +1,1 @@
+Testa como são exibidos os conteúdos das variáveis "Int" e "Float" (número inteiro ou com ponto flutuante)

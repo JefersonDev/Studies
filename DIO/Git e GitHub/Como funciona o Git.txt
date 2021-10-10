@@ -1,0 +1,105 @@
+---------------------------SHA1----------------------------
+
+É um algoritimo de encriptação (algoritimo de segurança);
+
+Gera um conjunto de caracteres de 40 digitos unico que serve como identificação: 
+(**Ex: se você tem um arquivo de texto e aplica o SHA1, ele cria um conjunto de caracteres, se você adicionar uma virgula ao texto ele cria um novo conjunto, se você excluir essa virgula ele volta ao conjunto já criado anteriormente**);
+
+O comando para aplicar o SHA1 é:
+**Para abrir o git bash**: abra da forma convencional de aplicativos e navegue até a pasta desejada usando os comandos do DOS ou dentro da pasta desejada clique com o botão direito do mouse e vá em "Git Bash here" (forma mais simples),
+**Com o git bash aberto na pasta onde o arquivo se encontra digite**:
+	openssl sha1 "nome do arquivo.extensão" (sem as aspas, extensão = .txt, .md ...e etc.);
+
+
+
+
+
+----------------------Objetos do Git-----------------------
+
+
+1 - BLOBS:
+Contém metadados (\0) do git, no caso, o tipo do objeto, o tamanho do arquivo e etc.
+
+Ex: Se eu usar o comando echo (de retorno na tela) junto com "hash-object --stdin", dessa forma ele me retorna o sha1
+	echo 'conteudo' | git hash-object --stdin
+	fc31e91b26cf85a55e072476de7f263c89260eb1
+
+Se eu usar o comando "openssl sha1" com o mesmo 'conteudo' ele me retorna outro SHA1, dessa forma
+	echo -e 'conteudo' | openssl sha1
+	65b0d0dda479cc03cce59528e28961e498155f5c
+
+
+Ele gera um outro SHA1 porque não foi indicado os meta dados da string 'conteudo'
+
+A forma para mostrar o mesmo SHA1 seria indircar esses metadados (tipo, tamanho e etc) dessa forma
+	echo -e 'blob 9\0conteudo' | openssl sha1
+	fc31e91b26cf85a55e072476de7f263c89260eb1
+
+**desmenbrando >>>>> 'blob = tipo do objeto, 9 = tamanho, \0 = contem no objeto, conteudo = arquivo'**
+(Pelo que entendi o tamanho é dado pela contagem de caracteres + o 0 ou seja Jef = 3 porém \0Jef = 4 ... sendo assim conteudo = 8 porém \0conteudo = 9 ... ficando então 9\0conteudo) 
+
+
+Blobs armazenam apenas o SHA1 do arquivo
+
+
+
+Blobs = Arquivos
+
+
+
+
+
+
+
+
+2 - Trees:
+Armazenam blobs, também contem metadados (\0), tem SHA1 e também guarda o nome do arquivo
+É responsavel de montar toda estrutura de onde estão esses arquivos
+
+Apontam tanto para blobs quanto para outras arvores, é dessa forma pois um DIRETORIO (pasta) pode conter outro diretorio (pasta) dentro dele mesmo
+
+As blobs possuem um SHA, as arvores apontam pra essas blobs e criam seu proprio SHA, então se mudarmos uma virgula no arquivo de uma blob, essa blob vai ter seu SHA modificado oque vai interferir diretamente no SHA de uma arvore.
+
+UMA COISA ESTÁ RELACIONADA COM A OUTRA SEMPRE,  se modificar um arquivo vai modificar toda a estrutura.
+
+
+
+
+
+Blobs = Arquivos
+Trees = Pastas
+
+
+
+
+
+
+
+
+3 - Commit (o objeto mais importante)
+Responsavel por juntar tudo, ou seja:
+
+O commit aponta para uma tree, aponta para o ultimo commit realizado antes dele, o commit aponta para um autor e aponta para uma mensagem
+
+Você pode escrever uma mensagem no commit que vai explicar, dar significado/sentido a esse monte de arquivo dentro desse monte de pastas
+
+Esse commit também tem um "timestamp", tipo um carimbo com informações da data e hora que foi criado
+
+Os Commits também possuem um SHA1 proprio, ou seja:
+	Se mudarmos uma virgula no arquivo de uma blob, essa blob vai ter seu SHA modificado que vai interferir diretamente no SHA de uma arvore, que também vai ser modificado, interferindo assim no SHA de um commit, modificando-o também.
+
+
+
+
+ou seja, gera uma linha do tempo, deixando muito claro se alguém interferiu ou modificou seu codigo seja lá por qual motivo, visto que uma minima modificação (uma virgula por ex) geraria uma mudança em toda a estrutura automaticamente.
+
+
+
+
+
+
+
+-------------------------INICIANDO O GIT--------------------------
+
+
+
