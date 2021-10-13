@@ -1,2 +1,2 @@
-# Estudos
-Tudo que venho estudando de forma mais organizada!!
+# Studies
+Everything that I've studing!!
