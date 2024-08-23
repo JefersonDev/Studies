@@ -1,2 +1,2 @@
 # Studies
-Everything that I've studing!!
+Everything that I've been studying!!
